@@ -15,12 +15,17 @@ COPY pyproject.toml uv.lock ./
 FROM deps-base AS deps
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-install-project --no-dev
+    uv sync --frozen --no-install-project --no-default-groups
+
+FROM deps-base AS deps-test
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-install-project --no-default-groups --group test
 
 FROM deps-base AS deps-dev
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-install-project
+    uv sync --frozen --no-install-project --group dev
 
 FROM base AS runtime
 
@@ -52,6 +57,10 @@ EXPOSE $GUNICORN_PORT
 FROM runtime AS development
 
 COPY --from=deps-dev /opt/venv /opt/venv
+
+FROM runtime AS test
+
+COPY --from=deps-test /opt/venv /opt/venv
 {%- if cookiecutter.use_vue == "y" %}
 
 FROM node:22-alpine AS frontend-build

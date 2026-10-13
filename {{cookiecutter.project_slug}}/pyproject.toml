@@ -3,7 +3,6 @@ name = "{{ cookiecutter.project_slug }}"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
-    "coverage>=7.13.1",
     "django>=5.2.9",
     "django-environ>=0.12.0",
     "django-redis>=7.0.0",
@@ -11,7 +10,6 @@ dependencies = [
 {%- if cookiecutter.use_drf == "y" %}
     "django-cors-headers>=4.9.0",
     "djangorestframework>=3.16.1",
-    "djangorestframework-stubs>=3.17.0",
     "drf-spectacular>=0.29.0",
 {%- endif %}
 {%- if cookiecutter.use_wagtail == "y" %}
@@ -21,12 +19,23 @@ dependencies = [
     "django-vite>=3.1.0",
 {%- endif %}
     "gunicorn>=23.0.0",
-    "pre-commit>=4.5.1",
     "psycopg[binary]>=3.3.2",
+    "secure>=1.0.1",
+]
+
+[dependency-groups]
+test = [
+    "coverage>=7.13.1",
     "pytest>=9.0.2",
     "pytest-django>=4.11.1",
+]
+dev = [
+    {include-group = "test"},
+{%- if cookiecutter.use_drf == "y" %}
+    "djangorestframework-stubs>=3.17.0",
+{%- endif %}
+    "pre-commit>=4.5.1",
     "ruff>=0.14.10",
-    "secure>=1.0.1",
 ]
 
 [tool.ruff]
