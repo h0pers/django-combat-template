@@ -46,7 +46,7 @@ jobs:
       - name: Build Docker image
         working-directory: my-django-project
         run: |
-          docker build --target development -t backend:test .
+          docker build --target test -t backend:test .
 
       - name: Run tests
         working-directory: my-django-project
