@@ -8,7 +8,6 @@ USE_VUE = "{{ cookiecutter.use_vue }}" == "y"
 
 REMOVE_PATHS_NO_DRF = [
     "website/website/settings/components/rest_framework.py",
-    "website/website/settings/components/cors.py",
     "website/apps/core/api/schema.py",
     "website/apps/core/api/docstring.py",
     "website/apps/polls/api",
