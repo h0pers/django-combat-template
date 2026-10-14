@@ -24,7 +24,7 @@ A production-ready [Cookiecutter](https://github.com/cookiecutter/cookiecutter) 
 
 ### When `use_drf` is enabled
 
-The template includes DRF, drf-spectacular for OpenAPI schema generation, django-cors-headers, and a pre-configured health check endpoint at `/api/health/`.
+The template includes DRF, drf-spectacular for OpenAPI schema generation, and a pre-configured health check endpoint at `/api/health/`.
 
 ## CI/CD
 

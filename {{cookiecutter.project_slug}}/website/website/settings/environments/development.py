@@ -24,11 +24,6 @@ SECURE_SSL_REDIRECT = False
 
 # Email backend for development (prints to console)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-{%- if cookiecutter.use_drf == "y" %}
-# Allow all origins in development
-CORS_ALLOW_ALL_ORIGINS = True
-{%- endif %}
 {%- if cookiecutter.use_vue == "y" %}
 
 DJANGO_VITE["default"]["dev_mode"] = True

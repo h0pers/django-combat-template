@@ -7,9 +7,6 @@ from website.settings import BASE_DIR, env
 # Application definition
 
 INSTALLED_APPS = [
-{%- if cookiecutter.use_drf == "y" %}
-    "corsheaders",
-{%- endif %}
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -53,9 +50,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-{%- if cookiecutter.use_drf == "y" %}
-    "corsheaders.middleware.CorsMiddleware",
-{%- endif %}
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

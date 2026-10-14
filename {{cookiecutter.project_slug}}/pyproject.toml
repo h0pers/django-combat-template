@@ -8,7 +8,6 @@ dependencies = [
     "django-redis>=7.0.0",
     "django-split-settings>=1.3.2",
 {%- if cookiecutter.use_drf == "y" %}
-    "django-cors-headers>=4.9.0",
     "djangorestframework>=3.16.1",
     "drf-spectacular>=0.29.0",
 {%- endif %}
