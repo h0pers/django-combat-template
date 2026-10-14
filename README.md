@@ -1,4 +1,4 @@
-# Django Docker Template
+# Django Combat Template
 
 A production-ready [Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for Django projects, fully containerized with Docker.
 
