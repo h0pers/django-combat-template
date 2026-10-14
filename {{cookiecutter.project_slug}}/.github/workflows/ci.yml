@@ -35,5 +35,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Build nginx
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker/nginx
+          push: false
+          cache-from: type=gha,scope=nginx
+          cache-to: type=gha,mode=max,scope=nginx
+
       - name: Test
         run: docker compose -f docker-compose.test.yml run --rm test

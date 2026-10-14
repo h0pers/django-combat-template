@@ -48,12 +48,23 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
 
+      - name: Build and push nginx
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker/nginx
+          push: true
+          pull: true
+          provenance: false
+          tags: ghcr.io/${{ github.repository }}-nginx:latest
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}-nginx:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}-nginx:buildcache,mode=max
+
       - name: Cleanup old images
         uses: snok/container-retention-policy@v3.0.0
         with:
           account: user
           token: ${{ secrets.PACKAGES_TOKEN }}
-          image-names: ${{ github.event.repository.name }}
+          image-names: "${{ github.event.repository.name }} ${{ github.event.repository.name }}-nginx"
           cut-off: 1h
           tag-selection: untagged
 
@@ -73,6 +84,7 @@ jobs:
         run: |
           {
             echo "GITHUB_REPOSITORY=${{ github.repository }}"
+            echo "MY_DOMAIN=${{ vars.MY_DOMAIN }}"
             echo "DJANGO_ENV=production"
             echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
             echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
@@ -141,8 +153,8 @@ jobs:
 
             echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
 
-            docker compose pull backend
-            docker compose up -d --build postgres postgres-backup
+            docker compose pull backend nginx
+            docker compose up -d --build postgres postgres-backup redis nginx
             docker compose run --rm backend python manage.py migrate --noinput
 
             docker rollout backend --timeout 120
