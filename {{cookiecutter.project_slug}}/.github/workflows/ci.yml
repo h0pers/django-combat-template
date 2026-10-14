@@ -43,5 +43,13 @@ jobs:
           cache-from: type=gha,scope=nginx
           cache-to: type=gha,mode=max,scope=nginx
 
+      - name: Build postgres
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker/postgres
+          push: false
+          cache-from: type=gha,scope=postgres
+          cache-to: type=gha,mode=max,scope=postgres
+
       - name: Test
         run: docker compose -f docker-compose.test.yml run --rm test
