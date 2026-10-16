@@ -4,7 +4,7 @@ A production-ready [Cookiecutter](https://github.com/cookiecutter/cookiecutter) 
 
 ## Stack
 
-- **Python 3.11** with [uv](https://github.com/astral-sh/uv) for dependency management
+- **Python 3.14** with [uv](https://github.com/astral-sh/uv) for dependency management
 - **Django 5.2** with split settings (`development` / `production` / `test`)
 - **PostgreSQL 17** (Alpine)
 - **Redis 8.4** for caching
