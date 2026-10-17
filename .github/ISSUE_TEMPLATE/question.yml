@@ -1,0 +1,14 @@
+name: Question
+description: Ask how to use or customise the template
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: Please check the [README](https://github.com/h0pers/django-combat-template#readme) and existing issues first.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you want to know? Include what you already tried.
+    validations:
+      required: true

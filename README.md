@@ -186,7 +186,9 @@ Contributions are welcome: bug reports, ideas and pull requests.
 2. Generate a project with your changes to check them: `uvx cookiecutter . --no-input`.
 3. Open a pull request. CI validates all 8 option combinations.
 
-Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
+Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/). See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+
+Please follow the [Code of Conduct](CODE_OF_CONDUCT.md). Questions go through [SUPPORT.md](SUPPORT.md), and vulnerabilities through [SECURITY.md](SECURITY.md).
 
 ## Acknowledgements
 
