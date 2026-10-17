@@ -8,7 +8,13 @@ list_polls_schema = extend_schema(
     summary="List Polls",
     description=docstring.LIST_POLLS_DOCS,
     tags=["Polls"],
+)
+
+create_poll_schema = extend_schema(
+    summary="Create Poll",
+    description=docstring.CREATE_POLL_DOCS,
+    tags=["Polls"],
     responses={
-        status.HTTP_200_OK: PollSerializer(many=True),
+        status.HTTP_201_CREATED: PollSerializer,
     },
 )
