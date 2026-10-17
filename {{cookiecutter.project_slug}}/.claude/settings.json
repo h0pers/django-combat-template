@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make help)",
+      "Bash(make test *)",
+      "Bash(make test-image)",
+      "Bash(make test-down)",
+      "Bash(make coverage)",
+      "Bash(make lint)",
+      "Bash(make format)",
+      "Bash(make makemigrations *)",
+      "Bash(make migrate-check)",
+      "Bash(uv run ruff *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --no-project --quiet python \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/protect_files.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --no-project --quiet python \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/format_python.py"
+          }
+        ]
+      }
+    ]
+  }
+}
