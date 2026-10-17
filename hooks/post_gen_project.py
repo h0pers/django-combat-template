@@ -10,6 +10,8 @@ REMOVE_PATHS_NO_DRF = [
     "website/website/settings/components/rest_framework.py",
     "website/apps/core/api/schema.py",
     "website/apps/core/api/docstring.py",
+    "website/apps/core/api/exception_handler.py",
+    "website/apps/core/tests/test_exception_handler.py",
     "website/apps/polls/api",
 ]
 
