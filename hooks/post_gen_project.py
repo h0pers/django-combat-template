@@ -13,6 +13,7 @@ REMOVE_PATHS_NO_DRF = [
     "website/apps/core/api/exception_handler.py",
     "website/apps/core/tests/test_exception_handler.py",
     "website/apps/polls/api",
+    "website/apps/polls/tests/test_api.py",
 ]
 
 REMOVE_PATHS_NO_DRF_AND_NO_VUE = [

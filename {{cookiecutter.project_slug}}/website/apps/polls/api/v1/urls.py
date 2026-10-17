@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import list_polls
+from .views import PollListCreateAPI
 
 app_name = "v1"
 
 urlpatterns = [
-    path("polls/", list_polls, name="polls"),
+    path("polls/", PollListCreateAPI.as_view(), name="polls"),
 ]

@@ -1,17 +1,27 @@
-from rest_framework.decorators import api_view
+from drf_spectacular.utils import extend_schema_view
+from rest_framework import generics, status
+from rest_framework.request import Request
 from rest_framework.response import Response
 
-from apps.polls.api.v1.schema import list_polls_schema
-from apps.polls.api.v1.serializers import PollSerializer
-
-FAKE_POLLS = [
-    {"id": 1, "question": "What is your favorite color?"},
-    {"id": 2, "question": "What is your favorite food?"},
-]
+from apps.polls.api.v1.schema import create_poll_schema, list_polls_schema
+from apps.polls.api.v1.serializers import PollCreateSerializer, PollSerializer
+from apps.polls.services import PollService
 
 
-@list_polls_schema
-@api_view(["GET"])
-def list_polls(request):
-    serializer = PollSerializer(FAKE_POLLS, many=True)
-    return Response(serializer.data)
+@extend_schema_view(get=list_polls_schema, post=create_poll_schema)
+class PollListCreateAPI(generics.ListCreateAPIView):
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return PollCreateSerializer
+        return PollSerializer
+
+    def get_queryset(self):
+        return PollService.get_all()
+
+    def create(self, request: Request, *args, **kwargs) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        poll = PollService.create(**serializer.validated_data)
+
+        return Response(PollSerializer(poll).data, status=status.HTTP_201_CREATED)
