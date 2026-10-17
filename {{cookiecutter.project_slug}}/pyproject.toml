@@ -12,7 +12,7 @@ dependencies = [
     "drf-spectacular>=0.29.0",
 {%- endif %}
 {%- if cookiecutter.use_wagtail == "y" %}
-    "wagtail>=7.4.2",
+    "wagtail>=8.0",
 {%- endif %}
 {%- if cookiecutter.use_vue == "y" %}
     "django-vite>=3.1.0",

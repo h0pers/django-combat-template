@@ -95,9 +95,6 @@ The short version; `docs/architecture.md` has the full explanation.
 - A new app needs `website/apps/<name>/apps.py` with `name = "apps.<name>"`, an `"apps.<name>.apps.<Name>Config"` entry in `INSTALLED_APPS` (`components/base.py`) and `make makemigrations ARGS=<name>`{% if cookiecutter.use_drf == "y" %}; include its `api/urls.py` in `website/api.py`{% endif %}.
 - URL names are namespaced, e.g. `reverse("api:core:health")`{% if cookiecutter.use_drf == "y" %} or `reverse("api:polls:v1:polls")`{% endif %}.
 - Tests that hit the database need `@pytest.mark.django_db`.
-{%- if cookiecutter.use_wagtail == "y" %}
-- `apps/cms` ships without migrations; create them with `make makemigrations ARGS=cms` before the first `migrate`.
-{%- endif %}
 
 ## Don't
 
