@@ -1,0 +1,85 @@
+name: Bug report
+description: Something in the template or a generated project does not work
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please search [existing issues](https://github.com/h0pers/django-combat-template/issues?q=is%3Aissue) first.
+        Security problems go through [SECURITY.md](https://github.com/h0pers/django-combat-template/blob/master/SECURITY.md), not here.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. uvx cookiecutter gh:h0pers/django-combat-template
+        2. make up-debug
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: dropdown
+    id: use_drf
+    attributes:
+      label: use_drf
+      options: ["y", "n"]
+    validations:
+      required: true
+  - type: dropdown
+    id: use_wagtail
+    attributes:
+      label: use_wagtail
+      options: ["n", "y"]
+    validations:
+      required: true
+  - type: dropdown
+    id: use_vue
+    attributes:
+      label: use_vue
+      options: ["n", "y"]
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where does it fail?
+      options:
+        - Project generation
+        - Local development
+        - Tests / CI
+        - Deployment
+        - Backups / restore
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS and tool versions.
+      placeholder: |
+        OS: macOS 15
+        uv: 0.9.x
+        cookiecutter: 2.6.x
+        Docker: 28.x (Colima)
+        Template commit: abc1234
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant output. Remove secrets before pasting.
+      render: shell
