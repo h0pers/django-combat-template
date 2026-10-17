@@ -27,6 +27,7 @@ DJANGO_ENV = env.str("DJANGO_ENV", default="production")
 # Component settings (shared across all environments)
 components = [
     "components/base.py",
+    "components/storage.py",
     "components/database.py",
     "components/security.py",
     "components/email.py",

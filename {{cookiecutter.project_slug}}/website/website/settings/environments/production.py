@@ -14,6 +14,15 @@ SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
 
+# Database connection pool, one per Gunicorn worker
+if env.bool("DJANGO_DB_POOL", default=True):
+    DATABASES["default"]["CONN_HEALTH_CHECKS"] = True
+    DATABASES["default"].setdefault("OPTIONS", {})["pool"] = {
+        "min_size": env.int("DJANGO_DB_POOL_MIN_SIZE", default=1),
+        "max_size": env.int("DJANGO_DB_POOL_MAX_SIZE", default=4),
+        "timeout": 10,
+    }
+
 # Security settings for production
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

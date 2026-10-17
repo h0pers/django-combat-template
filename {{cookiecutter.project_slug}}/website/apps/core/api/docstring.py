@@ -1,2 +1,5 @@
 HEALTH_DOCS = "Check the health of the API"
 HEALTH_RESPONSE_DOCS = "Returns the current health status"
+HEALTH_READY_DOCS = "Check that the API can reach its database and cache"
+HEALTH_READY_RESPONSE_DOCS = "All dependencies are reachable"
+HEALTH_NOT_READY_RESPONSE_DOCS = "A dependency is unreachable"

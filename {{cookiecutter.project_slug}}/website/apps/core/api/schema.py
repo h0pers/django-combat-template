@@ -13,3 +13,17 @@ health_schema = extend_schema(
         ),
     },
 )
+
+health_ready_schema = extend_schema(
+    summary="Check Readiness",
+    description=docstring.HEALTH_READY_DOCS,
+    tags=["Health"],
+    responses={
+        status.HTTP_200_OK: OpenApiResponse(
+            description=docstring.HEALTH_READY_RESPONSE_DOCS,
+        ),
+        status.HTTP_503_SERVICE_UNAVAILABLE: OpenApiResponse(
+            description=docstring.HEALTH_NOT_READY_RESPONSE_DOCS,
+        ),
+    },
+)

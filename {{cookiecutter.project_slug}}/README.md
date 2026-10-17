@@ -44,6 +44,8 @@ make migrate-check   # fail if models have unmigrated changes
 
 ```bash
 # Uses pre-built image from GHCR - does not build locally
+docker compose up -d postgres redis
+docker compose run --rm backend /docker-release.sh   # migrate, collectstatic, first superuser
 docker compose up
 ```
 
@@ -94,7 +96,48 @@ services:
       - "GUNICORN_TIMEOUT=60"
 ```
 
-Adjust `GUNICORN_WORKERS` to `(2 * CPU cores) + 1`. If the file is absent, defaults (`2` workers, `60`s timeout) apply.
+If the file is absent, defaults apply: `(2 * CPU cores) + 1` workers and a `60`s timeout (see `website/gunicorn.conf.py`). Lower the worker count on servers with little memory.
+
+Each worker keeps its own database connection pool (`DJANGO_DB_POOL_MAX_SIZE`, default `4`). Keep `workers × DJANGO_DB_POOL_MAX_SIZE × servers` below PostgreSQL's `max_connections` (default `100`). Behind PgBouncer in transaction mode, set `DJANGO_DB_POOL=false` and `DISABLE_SERVER_SIDE_CURSORS: True` in the database settings.
+
+## Health Checks
+
+| Endpoint | Checks | Use for |
+|---|---|---|
+| `/api/health/` | the app responds | Docker healthcheck and zero-downtime deploys |
+| `/api/health/ready/` | PostgreSQL and Redis are reachable | load balancers and uptime monitors |
+
+`/api/health/ready/` returns `503` when a dependency is down; the failing check is logged, not returned. Keep it out of the Docker healthcheck: a database outage would mark every container unhealthy, and orchestrators such as Docker Swarm restart unhealthy containers.
+
+## Files in S3
+
+By default media and static files live in Docker volumes on the server and nginx serves them. To run more than one server, or to serve files from a CDN, store them in S3-compatible storage (AWS S3, Cloudflare R2, Backblaze B2, MinIO) by adding these GitHub secrets:
+
+| Secret | Example |
+|---|---|
+| `DJANGO_AWS_STORAGE_BUCKET_NAME` | `my-project-files` |
+| `DJANGO_AWS_ACCESS_KEY_ID` | |
+| `DJANGO_AWS_SECRET_ACCESS_KEY` | |
+| `DJANGO_AWS_S3_ENDPOINT_URL` | `https://<account>.r2.cloudflarestorage.com` (empty for AWS) |
+| `DJANGO_AWS_S3_REGION_NAME` | `auto` or `eu-central-1` |
+| `DJANGO_AWS_STATIC_CUSTOM_DOMAIN` | `static.example.com` (optional CDN domain) |
+
+Media goes under `media/` and is served with signed, expiring URLs, so the bucket stays private. Static files go under `static/` with plain URLs so browsers can cache them, which needs two things on the bucket:
+
+- public read access for `static/*`, or a CDN in front of the bucket set as `DJANGO_AWS_STATIC_CUSTOM_DOMAIN`
+- a CORS rule allowing `GET` from `https://<your domain>`, needed for fonts and JavaScript modules
+
+The deploy uploads changed static files during `collectstatic`.
+
+## Running on Multiple Servers
+
+The app is stateless; to run it on more than one server:
+
+- Configure [Files in S3](#files-in-s3): local volumes only work on one server.
+- Set `GUNICORN_WORKERS` explicitly for each replica and stay within the connection budget above.
+- Run `docker-release.sh` once per deploy, never in each replica.
+- Keep `postgres` and `postgres-backup` on the same server; they share a volume.
+- Point the load balancer at `/api/health/ready/` and keep `/api/health/` as the container healthcheck.
 
 ## Database Backups
 
