@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 {%- endif %}
     # Custom apps
     "apps.core.apps.CoreConfig",
+    "apps.users.apps.UsersConfig",
 {%- if cookiecutter.use_wagtail == "y" %}
     "apps.cms.apps.CmsConfig",
 {%- endif %}
@@ -79,6 +80,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "website.wsgi.application"
+
+AUTH_USER_MODEL = "users.User"
 
 
 # Password validation
