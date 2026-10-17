@@ -8,6 +8,7 @@
     "use_vue": ["n", "y"],
     "_copy_without_render": [
         ".github/**",
+        ".claude/**",
         "website/templates/**",
         "website/apps/**/templates/**",
         "frontend/src/**"

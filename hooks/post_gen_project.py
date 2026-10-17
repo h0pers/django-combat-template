@@ -14,6 +14,8 @@ REMOVE_PATHS_NO_DRF = [
     "website/apps/core/tests/test_exception_handler.py",
     "website/apps/polls/api",
     "website/apps/polls/tests/test_api.py",
+    ".claude/rules/api.md",
+    ".claude/skills/add-endpoint",
 ]
 
 REMOVE_PATHS_NO_DRF_AND_NO_VUE = [
@@ -31,6 +33,7 @@ REMOVE_PATHS_NO_VUE = [
     "website/apps/polls/templates",
     "website/apps/polls/views.py",
     "website/apps/polls/urls.py",
+    ".claude/rules/frontend.md",
 ]
 
 
