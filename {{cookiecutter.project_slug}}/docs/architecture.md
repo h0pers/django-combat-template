@@ -162,6 +162,8 @@ class PollListCreateAPI(generics.ListCreateAPIView):
 | Shared infrastructure (base errors, middleware, health check) | `apps/core/` |
 | Pure helpers with no models or app imports | `website/utils/` |
 | A setting topic | `website/website/settings/components/<topic>.py`, registered in `settings/__init__.py` |
+| One-off deploy steps (migrations, static files, bootstrap data) | `docker-release.sh`, run once per deploy |
+| Production server tuning | `website/gunicorn.conf.py` |
 
 ## Tests
 

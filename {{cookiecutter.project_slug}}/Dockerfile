@@ -43,10 +43,10 @@ RUN apk add --no-cache su-exec libpq-dev && \
 
 WORKDIR $DJANGO_BASE_DIR
 
-COPY docker-cmd.sh /
+COPY docker-cmd.sh docker-release.sh /
 COPY $PROJECT_NAME $DJANGO_BASE_DIR
 
-RUN chmod +x /docker-cmd.sh && \
+RUN chmod +x /docker-cmd.sh /docker-release.sh && \
     mkdir -p $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT && \
     chown -R $USER:$USER $DJANGO_BASE_DIR $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT
 

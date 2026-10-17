@@ -61,8 +61,9 @@ website/                        Django project root (manage.py lives here)
 {%- endif %}
 ├── apps/users/                 custom User model (AUTH_USER_MODEL = "users.User")
 ├── utils/                      pure helpers; must not import from apps
+├── gunicorn.conf.py            production server config (workers, timeouts)
 └── website/
-    ├── settings/components/    settings split by topic (base, database, cache, ...)
+    ├── settings/components/    settings split by topic (base, database, cache, storage, ...)
     ├── settings/environments/  development.py, production.py, test.py
     ├── urls.py
     └── api.py                  mounts each app's api/urls.py under /api/
@@ -95,6 +96,8 @@ The short version; `docs/architecture.md` has the full explanation.
 - A new app needs `website/apps/<name>/apps.py` with `name = "apps.<name>"`, an `"apps.<name>.apps.<Name>Config"` entry in `INSTALLED_APPS` (`components/base.py`) and `make makemigrations ARGS=<name>`{% if cookiecutter.use_drf == "y" %}; include its `api/urls.py` in `website/api.py`{% endif %}.
 - URL names are namespaced, e.g. `reverse("api:core:health")`{% if cookiecutter.use_drf == "y" %} or `reverse("api:polls:v1:polls")`{% endif %}.
 - Tests that hit the database need `@pytest.mark.django_db`.
+- One-off deploy steps (migrations, `collectstatic`, bootstrap data) go in `docker-release.sh`, which runs once per deploy. `docker-cmd.sh` only starts the server, because it runs in every replica.
+- File storage is local by default and switches to S3 when `DJANGO_AWS_STORAGE_BUCKET_NAME` is set (`components/storage.py`). Use `default_storage` / `FileField`, never paths under `MEDIA_ROOT`.
 
 ## Don't
 

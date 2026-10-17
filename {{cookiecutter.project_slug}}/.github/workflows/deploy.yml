@@ -113,6 +113,20 @@ jobs:
             if [ -n "${{ secrets.DJANGO_SUPERUSER_EMAIL }}" ]; then
               echo "DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}"
             fi
+            if [ -n "${{ secrets.DJANGO_AWS_STORAGE_BUCKET_NAME }}" ]; then
+              echo "DJANGO_AWS_STORAGE_BUCKET_NAME=${{ secrets.DJANGO_AWS_STORAGE_BUCKET_NAME }}"
+              echo "DJANGO_AWS_ACCESS_KEY_ID=${{ secrets.DJANGO_AWS_ACCESS_KEY_ID }}"
+              echo "DJANGO_AWS_SECRET_ACCESS_KEY=${{ secrets.DJANGO_AWS_SECRET_ACCESS_KEY }}"
+              if [ -n "${{ secrets.DJANGO_AWS_S3_ENDPOINT_URL }}" ]; then
+                echo "DJANGO_AWS_S3_ENDPOINT_URL=${{ secrets.DJANGO_AWS_S3_ENDPOINT_URL }}"
+              fi
+              if [ -n "${{ secrets.DJANGO_AWS_S3_REGION_NAME }}" ]; then
+                echo "DJANGO_AWS_S3_REGION_NAME=${{ secrets.DJANGO_AWS_S3_REGION_NAME }}"
+              fi
+              if [ -n "${{ secrets.DJANGO_AWS_STATIC_CUSTOM_DOMAIN }}" ]; then
+                echo "DJANGO_AWS_STATIC_CUSTOM_DOMAIN=${{ secrets.DJANGO_AWS_STATIC_CUSTOM_DOMAIN }}"
+              fi
+            fi
           } > .env
 
       - name: Create walg.env
@@ -166,7 +180,7 @@ jobs:
 
             docker compose pull
             docker compose up -d postgres postgres-backup redis nginx
-            docker compose run --rm backend python manage.py migrate --noinput
+            docker compose run --rm backend /docker-release.sh
 
             docker rollout backend --timeout 120
 
