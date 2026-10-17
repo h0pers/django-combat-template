@@ -1,6 +1,5 @@
 COMPOSE_TEST = docker compose -f docker-compose.test.yml
 COMPOSE_DEBUG = docker compose -f docker-compose.debug.yml
-MIGRATION_APPS = users{% if cookiecutter.use_drf == "y" or cookiecutter.use_vue == "y" %} polls{% endif %}
 
 .PHONY: help up-debug test-image test coverage test-down lint format makemigrations migrate-check
 
@@ -38,4 +37,4 @@ makemigrations: ## Create migrations; pass ARGS to target an app, e.g. make make
 
 migrate-check: ## Fail if models have changes without migrations
 	@docker image inspect backend:test >/dev/null 2>&1 || $(MAKE) test-image
-	$(COMPOSE_TEST) run --rm test python manage.py makemigrations --check --dry-run $(MIGRATION_APPS)
+	$(COMPOSE_TEST) run --rm test python manage.py makemigrations --check --dry-run

@@ -48,6 +48,10 @@ jobs:
         run: |
           docker build --target test -t backend:test .
 
+      - name: Check migrations
+        working-directory: my-django-project
+        run: make migrate-check
+
       - name: Run tests
         working-directory: my-django-project
         run: |
