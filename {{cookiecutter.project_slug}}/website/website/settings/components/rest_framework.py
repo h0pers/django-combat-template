@@ -15,6 +15,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.AllowAny",
     ],
     "PAGE_SIZE": 100,
+    "EXCEPTION_HANDLER": "apps.core.api.exception_handler.custom_exception_handler",
 }
 
 # drf-spectacular - Swagger Documentation
