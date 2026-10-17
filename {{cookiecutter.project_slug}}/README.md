@@ -2,10 +2,12 @@
 
 ## Local Development
 
+Run `make help` to list all commands.
+
 ### Debug (hot reload, mounts source)
 
 ```bash
-docker compose -f docker-compose.debug.yml up --build
+make up-debug
 ```
 
 Backend available at `http://localhost`.
@@ -13,17 +15,29 @@ Backend available at `http://localhost`.
 ### Tests
 
 ```bash
-# Build test image first (only needed when deps change)
-docker build --target development -t backend:test .
-
-# Run full test suite
-docker compose -f docker-compose.test.yml run --rm test
+# Run full test suite (builds the test image on first run)
+make test
 
 # Run specific test file
-docker compose -f docker-compose.test.yml run --rm test pytest apps/core/tests/test_something.py
+make test ARGS=apps/core/tests/test_django_mode.py
 
 # Run with coverage
-docker compose -f docker-compose.test.yml run --rm test ./pytest.sh --ci
+make coverage
+
+# Rebuild test image after dependency changes
+make test-image
+
+# Stop the test database and cache
+make test-down
+```
+
+### Lint and migrations
+
+```bash
+make lint            # ruff check + format check
+make format          # ruff fix + format
+make makemigrations  # create migrations (ARGS=<app> to target one app)
+make migrate-check   # fail if models have unmigrated changes
 ```
 
 ### Production (local smoke test)
