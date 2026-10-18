@@ -19,6 +19,7 @@
 </p>
 
 <p align="center">
+  <a href="https://django-combat.readthedocs.io">Docs</a> •
   <a href="#quickstart">Quickstart</a> •
   <a href="#features">Features</a> •
   <a href="#template-options">Options</a> •
@@ -42,15 +43,18 @@ The aim is a template you can take to production on day one, without needing Kub
 **🚀 Deployment**
 - **Push to deploy.** GitHub Actions builds images, pushes them to GHCR and deploys over SSH once CI passes.
 - **Zero-downtime rollouts.** [`docker rollout`](https://github.com/wowu/docker-rollout) brings up the new backend before stopping the old one.
-- **Migrations run first.** Database migrations run before traffic moves to the new version.
+- **Release step.** Migrations, `collectstatic` and the first superuser run once per deploy, before traffic moves to the new version.
 - **Automatic HTTPS.** [Traefik](https://traefik.io/) gets Let's Encrypt certificates, redirects `www` to the apex domain and hides the `Server` header.
 - **Fast static files.** A separate Nginx container serves `/static/` and `/media/`, so Gunicorn only handles application requests.
 
 **🛡️ Database and reliability**
 - **PostgreSQL 17** with [WAL-G](https://github.com/wal-g/wal-g) continuous archiving, nightly base backups and **point-in-time restore**.
 - **Optional S3-compatible backup storage** (AWS, Cloudflare R2, MinIO and others) with libsodium encryption.
-- **Redis 8.4** cache through `django-redis`.
-- **Health checks** on every service, including a `/api/health/` endpoint.
+- **Redis 8.4** cache and sessions through `django-redis`.
+- **Database connection pooling** per Gunicorn worker, built into Django 5.2.
+- **Optional S3-compatible file storage** for media and static files, with signed URLs for media.
+- **Health checks** on every service, with separate liveness (`/api/health/`) and readiness (`/api/health/ready/`) endpoints.
+- **Ready for more servers.** Containers keep no local state, so you can run several replicas behind a load balancer.
 
 **🔒 Security defaults**
 - HSTS (1 year, preload), secure cookies, SSL redirect and `X-Frame-Options: DENY` in production.
@@ -92,7 +96,8 @@ Open **http://localhost**. On first start the stack creates a superuser from the
 | URL | What's there |
 |---|---|
 | `/admin/` | Django admin |
-| `/api/health/` | Health check |
+| `/api/health/` | Liveness check |
+| `/api/health/ready/` | Readiness check (PostgreSQL and Redis) |
 | `/api/docs/` | Swagger UI (with DRF, only when `DEBUG` is on) |
 | `/cms/` | Wagtail admin (with Wagtail) |
 | `/app/` | Vue SPA (with Vue) |
@@ -176,7 +181,7 @@ Deployment targets a single Linux VPS that runs Docker and a shared Traefik inst
 3. **Add GitHub secrets** to the `production` environment: `VPS_HOST`, `VPS_USER` (the deploy user), `SSH_PRIVATE_KEY`, `DJANGO_SECRET_KEY`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`, `PACKAGES_TOKEN`, plus the `MY_DOMAIN` variable.
 4. **Push to `master`.** CI tests the project, and then the deploy workflow builds, publishes and rolls out the new version.
 
-The generated project's README covers the full guide: the one-time systemd setup, Gunicorn tuning, backups to S3 and the step-by-step restore procedure.
+The generated project's README and the [docs](https://django-combat.readthedocs.io) cover the full guide: the one-time systemd setup, Gunicorn tuning, files and backups in S3, running on more servers and the step-by-step restore procedure.
 
 ## Contributing
 

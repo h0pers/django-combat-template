@@ -1,6 +1,10 @@
 # Cookiecutter output
 output/
 
+# Sphinx build and uv environment
+docs/_build/
+.venv/
+
 # IDE
 .idea/
 .vscode/
