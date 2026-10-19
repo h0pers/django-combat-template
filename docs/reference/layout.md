@@ -6,6 +6,7 @@ The files and directories of a generated project with every option turned on.
 my-django-project/
 ├── .claude/                  Claude Code rules, skills and hooks
 ├── .github/workflows/        ci.yml, deploy.yml, pre-commit.yml
+├── .mcp.json                 MCP servers for AI agents: shadcn-vue (use_vue)
 ├── docker/
 │   ├── nginx/                Image that serves /static/ and /media/
 │   └── postgres/             PostgreSQL image with WAL-G and the backup scripts

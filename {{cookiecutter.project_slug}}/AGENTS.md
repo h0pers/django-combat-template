@@ -14,6 +14,7 @@ Instructions for AI coding agents working in this repository. Human docs live in
 {%- endif %}
 {%- if cookiecutter.use_vue == "y" %}
 - Vue 3 + Vite in `frontend/`, rendered through django-vite
+- shadcn-vue UI components (`frontend/components.json`); agent skill in `.claude/skills/shadcn-vue`, MCP server in `.mcp.json`
 {%- endif %}
 - Docker Compose for every environment; production runs behind Traefik and nginx
 
