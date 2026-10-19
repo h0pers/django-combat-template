@@ -34,6 +34,8 @@ REMOVE_PATHS_NO_VUE = [
     "website/apps/polls/views.py",
     "website/apps/polls/urls.py",
     ".claude/rules/frontend.md",
+    ".claude/skills/shadcn-vue",
+    ".mcp.json",
 ]
 
 

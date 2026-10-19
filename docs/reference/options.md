@@ -28,7 +28,7 @@ After generation, the template deletes the files for options you turned off.
 | `use_drf=n` | REST framework settings, `apps/core/api/schema.py`, `docstring.py`, `exception_handler.py` and its tests, `apps/polls/api/`, `apps/polls/tests/test_api.py`, the API rule and the `add-endpoint` skill in `.claude/` |
 | `use_drf=n` and `use_vue=n` | The whole `apps/polls/` app |
 | `use_wagtail=n` | `apps/cms/`, Wagtail settings |
-| `use_vue=n` | `frontend/`, Vite settings, the `polls` SPA views, templates and URLs, the frontend rule in `.claude/` |
+| `use_vue=n` | `frontend/`, Vite settings, the `polls` SPA views, templates and URLs, the frontend rule and the `shadcn-vue` skill in `.claude/`, `.mcp.json` |
 
 ## After generation
 

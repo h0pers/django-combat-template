@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "shadcn-vue": {
+      "command": "sh",
+      "args": ["-c", "cd frontend && exec npx -y shadcn-vue@latest mcp"]
+    }
+  }
+}
