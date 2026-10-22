@@ -2,7 +2,7 @@
 
 This guide shows you how to change the number of Gunicorn workers and the request timeout on one server. These settings depend on the server's CPU and memory, so CI doesn't deploy them.
 
-Without any change, Gunicorn starts `(2 × CPU cores) + 1` workers, counting the cores the container can see, with a 60-second timeout. Lower the worker count on servers with little memory, or when the container is limited to fewer CPUs than the host has.
+Without any change, Gunicorn starts 4 workers with a 60-second timeout. A common starting point is `(2 × CPU cores) + 1`. Lower the worker count on servers with little memory.
 
 1. On the server, in the app directory, create `docker-compose.override.yml`:
 
@@ -20,7 +20,7 @@ Without any change, Gunicorn starts `(2 × CPU cores) + 1` workers, counting the
    workers × DJANGO_DB_POOL_MAX_SIZE × servers
    ```
 
-   For example, 5 workers on one server use up to 20 connections.
+   For example, 5 workers on one server use up to 20 connections. During a deploy, `docker rollout` runs the old and new containers side by side for a short time, so leave room for twice that.
 
 3. Apply the change without downtime:
 

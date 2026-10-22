@@ -4,7 +4,7 @@ A generated project runs on one server. This page explains how it grows past tha
 
 ## Scale up first
 
-A bigger VPS is the cheapest way to get more capacity. Gunicorn starts `(2 × CPU cores) + 1` workers by default, so a server with more cores runs more workers without any change. Adding servers brings a load balancer, shared storage and more ways to fail. It pays off when one server can't keep up, or when you need the app to survive losing a server.
+A bigger VPS is the cheapest way to get more capacity. On a server with more cores, raise `GUNICORN_WORKERS` as in {doc}`../how-to/tune-gunicorn`. Adding servers brings a load balancer, shared storage and more ways to fail. It pays off when one server can't keep up, or when you need the app to survive losing a server.
 
 ## What makes the app ready for more servers
 
