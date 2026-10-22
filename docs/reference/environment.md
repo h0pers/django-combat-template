@@ -79,7 +79,7 @@ Production only. Set them per server, as described in {doc}`../how-to/tune-gunic
 
 | Variable | Default | Description |
 |---|---|---|
-| `GUNICORN_WORKERS` | `(2 × CPU cores) + 1` | Number of worker processes. |
+| `GUNICORN_WORKERS` | `4` | Number of worker processes. |
 | `GUNICORN_TIMEOUT` | `60` | Request timeout in seconds. |
 | `GUNICORN_LOG_LEVEL` | `info` | Log level. |
 | `GUNICORN_PORT` | `8000` | Port Gunicorn listens on inside the container. |

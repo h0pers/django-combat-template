@@ -96,7 +96,7 @@ services:
       - "GUNICORN_TIMEOUT=60"
 ```
 
-If the file is absent, defaults apply: `(2 * CPU cores) + 1` workers and a `60`s timeout (see `website/gunicorn.conf.py`). Lower the worker count on servers with little memory.
+If the file is absent, defaults apply: `4` workers and a `60`s timeout (see `website/gunicorn.conf.py`). A common starting point is `(2 * CPU cores) + 1`; lower the worker count on servers with little memory.
 
 Each worker keeps its own database connection pool (`DJANGO_DB_POOL_MAX_SIZE`, default `4`). Keep `workers × DJANGO_DB_POOL_MAX_SIZE × servers` below PostgreSQL's `max_connections` (default `100`). Behind PgBouncer in transaction mode, set `DJANGO_DB_POOL=false` and `DISABLE_SERVER_SIDE_CURSORS: True` in the database settings.
 

@@ -1,7 +1,7 @@
 import os
 
 bind = f"0.0.0.0:{os.environ.get('GUNICORN_PORT', '8000')}"
-workers = int(os.environ.get("GUNICORN_WORKERS", os.process_cpu_count() * 2 + 1))
+workers = int(os.environ.get("GUNICORN_WORKERS", "4"))
 timeout = int(os.environ.get("GUNICORN_TIMEOUT", "60"))
 loglevel = os.environ.get("GUNICORN_LOG_LEVEL", "info")
 
