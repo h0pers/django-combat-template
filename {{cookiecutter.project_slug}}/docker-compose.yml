@@ -56,6 +56,9 @@ services:
       - "DJANGO_ENV=production"
       - "DJANGO_ALLOWED_HOSTS=${MY_DOMAIN}"
       - "DJANGO_CSRF_TRUSTED_ORIGINS=https://${MY_DOMAIN}"
+{%- if cookiecutter.use_wagtail == "y" %}
+      - "WAGTAILADMIN_BASE_URL=https://${MY_DOMAIN}"
+{%- endif %}
     restart: unless-stopped
     volumes:
       - "staticfiles-data:/var/www/static"
