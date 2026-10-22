@@ -103,7 +103,7 @@ Only with `use_wagtail=y`.
 | Variable | Default | Description |
 |---|---|---|
 | `WAGTAIL_SITE_NAME` | `<project_name>` | Site name shown in the Wagtail admin. |
-| `WAGTAILADMIN_BASE_URL` | `http://localhost` | Base URL used in links in Wagtail notification emails. |
+| `WAGTAILADMIN_BASE_URL` | `http://localhost` | Base URL used in links in Wagtail notification emails and previews. In production, Compose sets it to `https://<MY_DOMAIN>`. |
 
 ## Backups
 
